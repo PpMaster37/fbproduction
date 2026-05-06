@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
 import './App.css'
 import axios from 'axios';
-import {motion} from 'motion/react';
+import {AnimatePresence, motion} from 'motion/react';
+import { SelectorPages } from './SelectorPages';
 
 function TestComponent({data}) {
   return (
@@ -13,7 +14,7 @@ function TestComponent({data}) {
 
 async function accessDatabase(){
   try{
-    await axios.get('http://localhost:9000/mongoQuery').then(
+    await axios.get('http://localhost:8080/mongoQuery').then(
       (response) => {console.log(response.data)} 
     );
   } catch(error) {
@@ -23,7 +24,7 @@ async function accessDatabase(){
 
 async function updateDatabase(){
   try{
-    await axios.post('http://localhost:9000/mongoUpdate',
+    await axios.post('http://localhost:8080/mongoUpdate',
       {data: 'hello'}
     ).then((response) => {console.log(response.data.message)});
   } catch(error) {
@@ -33,7 +34,7 @@ async function updateDatabase(){
 
 async function clearDatabase(){
   try{
-    await axios.get('http://localhost:9000/mongoClear').then(
+    await axios.get('http://localhost:8080/mongoClear').then(
       (response) => {console.log(response.data)}
     )
   } catch(error) {
@@ -42,22 +43,19 @@ async function clearDatabase(){
 }
 
 function App() {
+  const [status, setStatus] = useState('title');
   const [loading, setLoading] = useState(true);
   const [selectedFlavors, setFlavors] = useState(['']);
+  const [selectedToppings, setToppings] = useState(['']);
   const [scoops, setScoops] = useState(0);
   const [availableFlavors, setAvailableFlavors] = useState([]);
-  const [dynamicTest, setDynamic] = useState([]);
 
-  async function refreshDynamic(){
-    try{
-      await axios.get('http://localhost:9000/mongoQuery').then(
-        (response) => {
-          setDynamic(response.data);
-        }
-      )
-    } catch(error) {
-      console.error(error);
-    }
+  const updateStatus = (newStatus) => {setStatus(newStatus)};
+  const updateFlavors = (newFlavors) => {setFlavors(newFlavors)};
+  const updateToppings = (newToppings) => {setToppings(newToppings)};
+  const updateScoops = (newScoops) => {setScoops(newScoops)};
+  const submitOrder = async () => {
+    //Send state variables to the database
   }
 
   async function sendData(){
@@ -66,7 +64,7 @@ function App() {
       inputValue = 'Placeholder for empty';
     }
     try{
-      await axios.post('http://localhost:9000/mongoUpdate', 
+      await axios.post('http://localhost:8080/mongoUpdate', 
         {data: inputValue}
       ).then(
         (response) => {
@@ -90,7 +88,7 @@ function App() {
       } catch (error) {
         console.error(error);
       }
-    }
+    } 
     wrapperMethod();
   }, []);
 
@@ -104,20 +102,18 @@ function App() {
     console.log('LOADING FINISHED')
     return (
       <div className="App">
-        <header className="App-header">
-          <motion.button 
-          whileHover={{scale: 2.0}}
-          onClick={() => {accessDatabase()}}>Testing Getfrom DB</motion.button>
-          <button onClick={() => {updateDatabase()}}>Testing updating DB</button>
-          <button onClick={() => {clearDatabase()}}>Clear DB</button>
-          <button onClick={() => {refreshDynamic()}}>Refresh</button>
-          <label htmlFor='testInput'>Place text in here!</label>
-          <input type='text' id='testInput'></input>
-          <button onClick={() => {sendData()}}>Submit</button>
-          {dynamicTest.map((item, index) => {
-            console.log(item.scoops);
-            return <TestComponent data={item.scoops} key={index}></TestComponent>
-          })}
+        <header className="App-header" id='center'>
+          <motion.h1>HERO TEXT</motion.h1>
+            <SelectorPages 
+              status={status} 
+              setStatus={updateStatus}
+              selectedFlavors={selectedFlavors}
+              setFlavors={updateFlavors}
+              slectedToppings={selectedToppings}
+              setToppings={updateToppings}
+              setScoops={updateScoops}
+              availableFlavors={availableFlavors}
+              submitOrder={submitOrder}></SelectorPages>
         </header>
       </div>
     )
