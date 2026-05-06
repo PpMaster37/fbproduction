@@ -176,3 +176,17 @@ li {
   grid-template-rows: auto auto;
   gap: 20px 20px;
 }
+
+.toppingContainer{
+  margin-top: 20px;
+  margin-bottom: 20px;
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  grid-template-rows: auto auto;
+  gap: 20px 20px;
+}
+
+.scoopWarning{
+  color: red;
+  margin-top: 20px;
+}

@@ -52,11 +52,11 @@ app.get('/flavors', async (req, res) => {
     res.json(flavorArray);
   })
   
-app.post('/mongoUpdate', async (req, res) => {
+app.post('/orderUpdate', async (req, res) => {
     const newOrder = new OrderModel({
-      scoops: req.body.data,
-      flavors: ['Chocolate', 'Vanilla'],
-      toppings: ['Gummy mix'],
+      scoops: req.body.scoops,
+      flavors: req.body.flavors,
+      toppings: req.body.toppings
     });
     console.log(req.body.data);
     await newOrder.save();
@@ -70,7 +70,7 @@ app.get('/mongoQuery', async (req, res) => {
 })
   
 app.get('/mongoClear', async (req, res) => {
-    await orderModel.deleteMany({});
+    await OrderModel.deleteMany({});
     console.log('Database cleared');
     res.send('Database cleared');
 })
