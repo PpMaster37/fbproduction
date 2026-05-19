@@ -47,6 +47,10 @@ async function updateFlavorArray(){
 //   'Butter Pecan'
 // ]);
 
+app.get('/', async (req, res) => {
+  res.sendFile('home.html');
+})
+
 app.get('/flavors', async (req, res) => {
     await updateFlavorArray();
     res.json(flavorArray);
