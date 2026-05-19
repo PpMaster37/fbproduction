@@ -3,10 +3,15 @@ import './App.css'
 import axios from 'axios';
 import {AnimatePresence, motion} from 'motion/react';
 import { SelectorPages } from './SelectorPages';
+import { clear } from 'console';
+
+const clearAPI = 'https://frostbit-kqe4.onrender.com/mongoClear';
+const postOrderAPI = 'https://frostbit-kqe4.onrender.com/orderUpdate';
+const getFlavorsAPI = 'https://frostbit-kqe4.onrender.com/flavors';
 
 async function clearDatabase(){
   try{
-    await axios.get('http://localhost:8080/mongoClear').then(
+    await axios.get(clearAPI).then(
       (response) => {console.log(response.data)}
     )
   } catch(error) {
@@ -38,7 +43,7 @@ function App() {
       tempToppings = ['No toppings'];
     }
     try{
-      await axios.post('http://localhost:8080/orderUpdate', {
+      await axios.post(postOrderAPI, {
         scoops: scoops,
         flavors: selectedFlavors,
         toppings: tempToppings
@@ -54,7 +59,7 @@ function App() {
     console.log('useEffect called');
     const axiosWrapper = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/flavors');
+        const response = await axios.get(getFlavorsAPI);
         setLoading(false);
         const newArray = response.data;
         console.log(response);
