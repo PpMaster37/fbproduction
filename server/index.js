@@ -58,7 +58,7 @@ app.post('/orderUpdate', async (req, res) => {
       flavors: req.body.flavors,
       toppings: req.body.toppings
     });
-    console.log(req.body.data);
+    console.log(req.body);
     await newOrder.save();
     res.json({message: 'updated!'})
 })

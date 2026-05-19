@@ -186,7 +186,30 @@ li {
   gap: 20px 20px;
 }
 
+.visualScoopContainer{
+  position: relative;
+  display: grid;
+}
+
 .scoopWarning{
   color: red;
   margin-top: 20px;
+}
+
+.visualLabel{
+  grid-area: 1/1;
+}
+
+.scoopX{
+  position: "absolute";
+  font-size: 24;
+  z-index: 5;
+  color: red;
+  font-weight: "bold";
+  grid-area: 1/ 1;
+}
+
+.allFlavorsDiv{
+  display: flex;
+  flex-direction: column-reverse;
 }

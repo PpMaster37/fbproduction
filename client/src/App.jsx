@@ -29,17 +29,19 @@ function App() {
 
   const submitOrder = async () => {
     //Send state variables to the database
+    let tempToppings = selectedToppings;
     if(selectedFlavors.length == 0){
       setFlavors(['No flavors?']);
     } 
     if(selectedToppings.length == 0){
-      setToppings(['No toppings'])
+      setToppings(['No toppings']);
+      tempToppings = ['No toppings'];
     }
     try{
       await axios.post('http://localhost:8080/orderUpdate', {
         scoops: scoops,
         flavors: selectedFlavors,
-        toppings: selectedToppings
+        toppings: tempToppings
       }).then((response) => {
         console.log(response.data.message);
       })
@@ -82,7 +84,7 @@ function App() {
               setStatus={updateStatus}
               selectedFlavors={selectedFlavors}
               setFlavors={updateFlavors}
-              slectedToppings={selectedToppings}
+              selectedToppings={selectedToppings}
               setToppings={updateToppings}
               setScoops={updateScoops}
               availableFlavors={availableFlavors}

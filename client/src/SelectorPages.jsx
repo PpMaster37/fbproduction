@@ -93,14 +93,20 @@ export function SelectorPages(props){
             <motion.div key={'flavorDiv'}>
               <motion.button key={'backbutton'} 
                 onClick={() => props.setStatus('chooseSize')}>Go Back!</motion.button>
-              <motion.div>
+              <motion.div className="allFlavorsDiv">
                 {props.selectedFlavors.map((flavor, index) => {
                   return(visualFlavors[index] && (<motion.div key={flavor + index}
-                  onClick={() => {
-                    let newHead = visualHead - 1;
-                    setVisualHead(newHead);
-                    let count = 0;
-                    const newVisualArray = visualFlavors.map(() => {
+                    initial={{opacity : 0, y : -20}}
+                    animate={{opacity : 1, y : 0}}
+                    exit={{opacity : 0, x : -50}}
+                    transition={{duration : 0.5}}
+                    whileHover="hover"
+                    className="visualScoopContainer"
+                    onClick={() => {
+                      let newHead = visualHead - 1;
+                      setVisualHead(newHead);
+                      let count = 0;
+                      const newVisualArray = visualFlavors.map(() => {
                         if(count < newHead){
                           count++;
                           console.log(count);
@@ -109,19 +115,26 @@ export function SelectorPages(props){
                           count++;
                           return false;
                         }
-                    })
-                    console.log(newVisualArray);
+                      })
                     console.log(flavor + ' was removed!');
                     setVisuals(newVisualArray);
                     const newFlavorArray = props.selectedFlavors.filter(selectFlavor =>{
                       return selectFlavor !== flavor;
                     })
-                    console.log(newFlavorArray);
                     props.setFlavors(newFlavorArray);
                   }}>
-                    {flavor}
-                  </motion.div>))
+                    <div className='visualLabel'>{flavor}</div>
+                    <motion.div
+                      variants={{
+                      hover: { opacity: 1, scale: 1 }, 
+                    }}
+                      initial={{ opacity: 0, scale: 0.5 }} 
+                      transition={{ duration: 0.3 }}
+                      className='scoopX'>
+                        ✕</motion.div>
+                   </motion.div>))
                 })}
+                {/* <motion.svg></motion.svg> */}
               </motion.div>
               <motion.div className='flavorContainer' variants={flavorContainer}
                 initial='hidden' animate='visible' key={'flavorGrid'}>
@@ -184,7 +197,7 @@ export function SelectorPages(props){
                       return  <motion.button variants={toppingItem} key={topping} onClick={
                           () => {
                             props.setToppings([...props.selectedToppings, topping]);
-                            console.log(props.selectedToppings);
+                            console.log(topping + " added!");
                           }
                       }> {topping} </motion.button>
                     })}
@@ -193,11 +206,14 @@ export function SelectorPages(props){
                     props.submitOrder();
                     props.setStatus('end');
                   }}>Submit Order!</motion.button>
+                  <motion.button onClick={() => props.setStatus('addFlavors')}>
+                    Go Back!
+                  </motion.button>
                 </motion.div>
             );
         case 'end':
           return (
-            <motion.div></motion.div>
+            <motion.div>Your order has been submitted!</motion.div>
           );
         default:
           return(<motion.div key={'defaultDiv'}>DEFAULT</motion.div>);
