@@ -4,6 +4,7 @@ import cors from 'cors';
 import connectDB from './initdb.js';
 import FlavorModel from './FlavorModel.js';
 import OrderModel from './OrderModel.js';
+import path from 'path';
 
 const app = express();
 
@@ -48,7 +49,7 @@ async function updateFlavorArray(){
 // ]);
 
 app.get('/', async (req, res) => {
-  res.sendFile('home.html');
+  res.sendFile(path.join(__dirname, 'home.html'));
 })
 
 app.get('/flavors', async (req, res) => {
