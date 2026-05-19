@@ -6,6 +6,7 @@ import FlavorModel from './FlavorModel.js';
 import OrderModel from './OrderModel.js';
 import path from 'path';
 
+const dir = import.meta.dirname;
 const app = express();
 
 const port = process.env.PORT;
@@ -49,7 +50,7 @@ async function updateFlavorArray(){
 // ]);
 
 app.get('/', async (req, res) => {
-  res.sendFile(path.join(__dirname, 'home.html'));
+  res.sendFile(path.join(dir, 'home.html'));
 })
 
 app.get('/flavors', async (req, res) => {
