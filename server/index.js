@@ -28,13 +28,13 @@ async function updateFlavorArray(){
     })
 }
   
-function addingEightFlavors(flavorInputArray){
-    flavorInputArray.forEach(async (flavor) => {
-      const newFlavor = new FlavorModel({name: flavor});
-      await newFlavor.save();
-      console.log(flavor + 'added!');
-    })
-}
+// function addingEightFlavors(flavorInputArray){
+//     flavorInputArray.forEach(async (flavor) => {
+//       const newFlavor = new FlavorModel({name: flavor});
+//       await newFlavor.save();
+//       console.log(flavor + 'added!');
+//     })
+// }
 
 // addingEightFlavors([
 //   'Chocolate', 
